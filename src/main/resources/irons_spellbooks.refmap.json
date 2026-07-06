@@ -1,0 +1,194 @@
+{
+  "mappings": {
+    "io/redspace/ironsspellbooks/mixin/DispenserBlockMixin": {
+      "dispenseFrom": "Lnet/minecraft/world/level/block/DispenserBlock;m_5824_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V",
+      "getDispenseMethod": "Lnet/minecraft/world/level/block/DispenserBlock;m_7216_(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/dispenser/DispenseItemBehavior;"
+    },
+    "io/redspace/ironsspellbooks/mixin/EntityAccessor": {
+      "removalReason": "f_146795_:Lnet/minecraft/world/entity/Entity$RemovalReason;"
+    },
+    "io/redspace/ironsspellbooks/mixin/FlintAnSteelItemMixin": {
+      "useOn": "Lnet/minecraft/world/item/FlintAndSteelItem;m_6225_(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;"
+    },
+    "io/redspace/ironsspellbooks/mixin/GuiMixin": {
+      "renderExperienceBar": "Lnet/minecraft/client/gui/Gui;m_280276_(Lnet/minecraft/client/gui/GuiGraphics;I)V",
+      "renderJumpMeter": "Lnet/minecraft/client/gui/Gui;m_280069_(Lnet/minecraft/world/entity/PlayerRideableJumping;Lnet/minecraft/client/gui/GuiGraphics;I)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/ItemMixin": {
+      "getName": "Lnet/minecraft/world/item/Item;m_7626_(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/network/chat/Component;"
+    },
+    "io/redspace/ironsspellbooks/mixin/ClientBookAccessMixin": {
+      "bookChanged": "Lnet/minecraft/client/gui/screens/inventory/LecternScreen;m_99044_()V"
+    },
+    "io/redspace/ironsspellbooks/mixin/ItemStackMixin": {
+      "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V": "Lnet/minecraft/world/item/ItemStack;<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/NoiseChunkMixin": {
+      "getInterpolatedState": "Lnet/minecraft/world/level/levelgen/NoiseChunk;m_209247_()Lnet/minecraft/world/level/block/state/BlockState;"
+    },
+    "io/redspace/ironsspellbooks/mixin/ParticleMixin": {
+      "move": "Lnet/minecraft/client/particle/Particle;m_6257_(DDD)V",
+      "Lnet/minecraft/world/entity/Entity;collideBoundingBox(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;Ljava/util/List;)Lnet/minecraft/world/phys/Vec3;": "Lnet/minecraft/world/entity/Entity;m_198894_(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;Ljava/util/List;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    "io/redspace/ironsspellbooks/mixin/SmithingRecipeMixin": {
+      "assemble": "Lnet/minecraft/world/item/crafting/SmithingTransformRecipe;m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    "io/redspace/ironsspellbooks/mixin/LecternBlockEntityMixin": {
+      "hasBook": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_59567_()Z",
+      "setBook(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_59538_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+      "load": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_142466_(Lnet/minecraft/nbt/CompoundTag;)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/LivingEntityMixin": {
+      "updateInvisibilityStatus": "Lnet/minecraft/world/entity/LivingEntity;m_8034_()V",
+      "addAdditionalSaveData": "Lnet/minecraft/world/entity/LivingEntity;m_7380_(Lnet/minecraft/nbt/CompoundTag;)V",
+      "onEffectUpdated": "Lnet/minecraft/world/entity/LivingEntity;m_141973_(Lnet/minecraft/world/effect/MobEffectInstance;ZLnet/minecraft/world/entity/Entity;)V",
+      "onEffectAdded": "Lnet/minecraft/world/entity/LivingEntity;m_142540_(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)V",
+      "isCurrentlyGlowing": "Lnet/minecraft/world/entity/LivingEntity;m_142038_()Z",
+      "readAdditionalSaveData": "Lnet/minecraft/world/entity/LivingEntity;m_7378_(Lnet/minecraft/nbt/CompoundTag;)V",
+      "onEffectRemoved": "Lnet/minecraft/world/entity/LivingEntity;m_7285_(Lnet/minecraft/world/effect/MobEffectInstance;)V",
+      "hurt": "Lnet/minecraft/world/entity/LivingEntity;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    "io/redspace/ironsspellbooks/mixin/ClientEntityMixin": {
+      "getTeamColor": "Lnet/minecraft/world/entity/Entity;m_19876_()I"
+    },
+    "io/redspace/ironsspellbooks/mixin/MobEffectMixin": {
+      "applyEffectTick": "Lnet/minecraft/world/effect/MobEffect;m_6742_(Lnet/minecraft/world/entity/LivingEntity;I)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/PlayerMixin": {
+      "canEat": "Lnet/minecraft/world/entity/player/Player;m_36391_(Z)Z",
+      "isModelPartShown": "Lnet/minecraft/world/entity/player/Player;m_36170_(Lnet/minecraft/world/entity/player/PlayerModelPart;)Z"
+    },
+    "io/redspace/ironsspellbooks/mixin/TridentItemMixin": {
+      "releaseUsing": "Lnet/minecraft/world/item/TridentItem;m_5551_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/CreeperMixin": {
+      "thunderHit": "Lnet/minecraft/world/entity/monster/Creeper;m_8038_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/SimpleTextureMixin": {
+      "doLoad": "Lnet/minecraft/client/renderer/texture/SimpleTexture;m_118136_(Lcom/mojang/blaze3d/platform/NativeImage;ZZ)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/ServerLevelMixin": {
+      "tickCustomSpawners": "Lnet/minecraft/server/level/ServerLevel;m_8799_(ZZ)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/EntityMixin": {
+      "isInvisibleTo": "Lnet/minecraft/world/entity/Entity;m_20177_(Lnet/minecraft/world/entity/player/Player;)Z",
+      "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/world/entity/Entity;m_7307_(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    "io/redspace/ironsspellbooks/mixin/SpinAttackEffectLayerMixin": {
+      "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;II)V": "Lnet/minecraft/client/model/geom/ModelPart;m_104301_(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;II)V",
+      "render": "Lnet/minecraft/client/renderer/entity/layers/SpinAttackEffectLayer;m_6494_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/EntityRendererMixin": {
+      "shouldRender": "Lnet/minecraft/client/renderer/entity/EntityRenderer;m_5523_(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z"
+    },
+    "io/redspace/ironsspellbooks/mixin/LecternRendererMixin": {
+      "render(Lnet/minecraft/world/level/block/entity/LecternBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V": "Lnet/minecraft/client/renderer/blockentity/LecternRenderer;m_6922_(Lnet/minecraft/world/level/block/entity/LecternBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V"
+    },
+    "io/redspace/ironsspellbooks/mixin/NoiseChunkGeneratorMixin": {
+      "createNoiseChunk": "Lnet/minecraft/world/level/levelgen/NoiseBasedChunkGenerator;m_224256_(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/levelgen/NoiseChunk;"
+    },
+    "io/redspace/ironsspellbooks/mixin/MinecraftMixin": {
+      "shouldEntityAppearGlowing": "Lnet/minecraft/client/Minecraft;m_91314_(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    "io/redspace/ironsspellbooks/mixin/LivingEntityAccessor": {
+      "setLivingEntityFlag": "m_21155_(IZ)V"
+    }
+  },
+  "data": {
+    "searge": {
+      "io/redspace/ironsspellbooks/mixin/DispenserBlockMixin": {
+        "dispenseFrom": "Lnet/minecraft/world/level/block/DispenserBlock;m_5824_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V",
+        "getDispenseMethod": "Lnet/minecraft/world/level/block/DispenserBlock;m_7216_(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/dispenser/DispenseItemBehavior;"
+      },
+      "io/redspace/ironsspellbooks/mixin/EntityAccessor": {
+        "removalReason": "f_146795_:Lnet/minecraft/world/entity/Entity$RemovalReason;"
+      },
+      "io/redspace/ironsspellbooks/mixin/FlintAnSteelItemMixin": {
+        "useOn": "Lnet/minecraft/world/item/FlintAndSteelItem;m_6225_(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;"
+      },
+      "io/redspace/ironsspellbooks/mixin/GuiMixin": {
+        "renderExperienceBar": "Lnet/minecraft/client/gui/Gui;m_280276_(Lnet/minecraft/client/gui/GuiGraphics;I)V",
+        "renderJumpMeter": "Lnet/minecraft/client/gui/Gui;m_280069_(Lnet/minecraft/world/entity/PlayerRideableJumping;Lnet/minecraft/client/gui/GuiGraphics;I)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/ItemMixin": {
+        "getName": "Lnet/minecraft/world/item/Item;m_7626_(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/network/chat/Component;"
+      },
+      "io/redspace/ironsspellbooks/mixin/ClientBookAccessMixin": {
+        "bookChanged": "Lnet/minecraft/client/gui/screens/inventory/LecternScreen;m_99044_()V"
+      },
+      "io/redspace/ironsspellbooks/mixin/ItemStackMixin": {
+        "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V": "Lnet/minecraft/world/item/ItemStack;<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/NoiseChunkMixin": {
+        "getInterpolatedState": "Lnet/minecraft/world/level/levelgen/NoiseChunk;m_209247_()Lnet/minecraft/world/level/block/state/BlockState;"
+      },
+      "io/redspace/ironsspellbooks/mixin/ParticleMixin": {
+        "move": "Lnet/minecraft/client/particle/Particle;m_6257_(DDD)V",
+        "Lnet/minecraft/world/entity/Entity;collideBoundingBox(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;Ljava/util/List;)Lnet/minecraft/world/phys/Vec3;": "Lnet/minecraft/world/entity/Entity;m_198894_(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;Ljava/util/List;)Lnet/minecraft/world/phys/Vec3;"
+      },
+      "io/redspace/ironsspellbooks/mixin/SmithingRecipeMixin": {
+        "assemble": "Lnet/minecraft/world/item/crafting/SmithingTransformRecipe;m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;"
+      },
+      "io/redspace/ironsspellbooks/mixin/LecternBlockEntityMixin": {
+        "hasBook": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_59567_()Z",
+        "setBook(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_59538_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+        "load": "Lnet/minecraft/world/level/block/entity/LecternBlockEntity;m_142466_(Lnet/minecraft/nbt/CompoundTag;)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/LivingEntityMixin": {
+        "updateInvisibilityStatus": "Lnet/minecraft/world/entity/LivingEntity;m_8034_()V",
+        "addAdditionalSaveData": "Lnet/minecraft/world/entity/LivingEntity;m_7380_(Lnet/minecraft/nbt/CompoundTag;)V",
+        "onEffectUpdated": "Lnet/minecraft/world/entity/LivingEntity;m_141973_(Lnet/minecraft/world/effect/MobEffectInstance;ZLnet/minecraft/world/entity/Entity;)V",
+        "onEffectAdded": "Lnet/minecraft/world/entity/LivingEntity;m_142540_(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)V",
+        "isCurrentlyGlowing": "Lnet/minecraft/world/entity/LivingEntity;m_142038_()Z",
+        "readAdditionalSaveData": "Lnet/minecraft/world/entity/LivingEntity;m_7378_(Lnet/minecraft/nbt/CompoundTag;)V",
+        "onEffectRemoved": "Lnet/minecraft/world/entity/LivingEntity;m_7285_(Lnet/minecraft/world/effect/MobEffectInstance;)V",
+        "hurt": "Lnet/minecraft/world/entity/LivingEntity;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      },
+      "io/redspace/ironsspellbooks/mixin/ClientEntityMixin": {
+        "getTeamColor": "Lnet/minecraft/world/entity/Entity;m_19876_()I"
+      },
+      "io/redspace/ironsspellbooks/mixin/MobEffectMixin": {
+        "applyEffectTick": "Lnet/minecraft/world/effect/MobEffect;m_6742_(Lnet/minecraft/world/entity/LivingEntity;I)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/PlayerMixin": {
+        "canEat": "Lnet/minecraft/world/entity/player/Player;m_36391_(Z)Z",
+        "isModelPartShown": "Lnet/minecraft/world/entity/player/Player;m_36170_(Lnet/minecraft/world/entity/player/PlayerModelPart;)Z"
+      },
+      "io/redspace/ironsspellbooks/mixin/TridentItemMixin": {
+        "releaseUsing": "Lnet/minecraft/world/item/TridentItem;m_5551_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/CreeperMixin": {
+        "thunderHit": "Lnet/minecraft/world/entity/monster/Creeper;m_8038_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/SimpleTextureMixin": {
+        "doLoad": "Lnet/minecraft/client/renderer/texture/SimpleTexture;m_118136_(Lcom/mojang/blaze3d/platform/NativeImage;ZZ)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/ServerLevelMixin": {
+        "tickCustomSpawners": "Lnet/minecraft/server/level/ServerLevel;m_8799_(ZZ)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/EntityMixin": {
+        "isInvisibleTo": "Lnet/minecraft/world/entity/Entity;m_20177_(Lnet/minecraft/world/entity/player/Player;)Z",
+        "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/world/entity/Entity;m_7307_(Lnet/minecraft/world/entity/Entity;)Z"
+      },
+      "io/redspace/ironsspellbooks/mixin/SpinAttackEffectLayerMixin": {
+        "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;II)V": "Lnet/minecraft/client/model/geom/ModelPart;m_104301_(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;II)V",
+        "render": "Lnet/minecraft/client/renderer/entity/layers/SpinAttackEffectLayer;m_6494_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/EntityRendererMixin": {
+        "shouldRender": "Lnet/minecraft/client/renderer/entity/EntityRenderer;m_5523_(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z"
+      },
+      "io/redspace/ironsspellbooks/mixin/LecternRendererMixin": {
+        "render(Lnet/minecraft/world/level/block/entity/LecternBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V": "Lnet/minecraft/client/renderer/blockentity/LecternRenderer;m_6922_(Lnet/minecraft/world/level/block/entity/LecternBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V"
+      },
+      "io/redspace/ironsspellbooks/mixin/NoiseChunkGeneratorMixin": {
+        "createNoiseChunk": "Lnet/minecraft/world/level/levelgen/NoiseBasedChunkGenerator;m_224256_(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/levelgen/NoiseChunk;"
+      },
+      "io/redspace/ironsspellbooks/mixin/MinecraftMixin": {
+        "shouldEntityAppearGlowing": "Lnet/minecraft/client/Minecraft;m_91314_(Lnet/minecraft/world/entity/Entity;)Z"
+      },
+      "io/redspace/ironsspellbooks/mixin/LivingEntityAccessor": {
+        "setLivingEntityFlag": "m_21155_(IZ)V"
+      }
+    }
+  }
+}

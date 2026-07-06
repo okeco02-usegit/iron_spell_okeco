@@ -1,0 +1,60 @@
+package io.redspace.ironsspellbooks.fluids;
+
+import io.redspace.ironsspellbooks.api.backwards_compat.FluidHelper;
+import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidType.Properties;
+
+public class PotionFluidType extends FluidType {
+   public PotionFluidType(Properties properties) {
+      super(properties);
+   }
+
+   public String getDescriptionId(FluidStack stack) {
+      Potion potion = FluidHelper.getPotionContents(stack);
+      PotionFluid.BottleType bottle = PotionFluid.BottleType.get(stack);
+      return potion.m_43492_(String.format("item.minecraft.%s.effect.", bottle.descriptionId()));
+   }
+
+   public Component getDescription(FluidStack stack) {
+      Potion potion = FluidHelper.getPotionContents(stack);
+      if (potion != null && !potion.m_43488_().isEmpty()) {
+         List<MobEffectInstance> effects = potion.m_43488_();
+         MobEffectInstance primary = effects.iterator().next();
+         MutableComponent component = Component.m_237115_(this.getDescriptionId(stack));
+         if (primary.m_19564_() > 0) {
+            component = component.m_130946_(" " + this.simpleRomanNumeral(primary.m_19564_() + 1));
+         }
+
+         if (!primary.m_19544_().m_8093_() && primary.m_19557_() > 0) {
+            component = component.m_130946_(String.format(" (%s)", MobEffectUtil.m_267641_(primary, 1.0F).getString()));
+         }
+
+         return component;
+      } else {
+         return super.getDescription(stack);
+      }
+   }
+
+   private String simpleRomanNumeral(int i) {
+      return switch (i) {
+         case 1 -> "I";
+         case 2 -> "II";
+         case 3 -> "III";
+         case 4 -> "IV";
+         case 5 -> "V";
+         case 6 -> "VI";
+         case 7 -> "VII";
+         case 8 -> "VIII";
+         case 9 -> "IX";
+         case 10 -> "X";
+         default -> String.valueOf(i);
+      };
+   }
+}

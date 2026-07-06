@@ -1,0 +1,817 @@
+package io.redspace.ironsspellbooks.registries;
+
+import io.redspace.ironsspellbooks.IronsSpellbooks;
+import io.redspace.ironsspellbooks.api.item.weapons.ExtendedSwordItem;
+import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.SpellRarity;
+import io.redspace.ironsspellbooks.compat.Curios;
+import io.redspace.ironsspellbooks.item.ArcaneSalvageItem;
+import io.redspace.ironsspellbooks.item.ArchevokerLogbookItem;
+import io.redspace.ironsspellbooks.item.ChronicleItem;
+import io.redspace.ironsspellbooks.item.CinderousSoulcallerItem;
+import io.redspace.ironsspellbooks.item.CursedDollSpellbookItem;
+import io.redspace.ironsspellbooks.item.DragonskinItem;
+import io.redspace.ironsspellbooks.item.EldritchManuscript;
+import io.redspace.ironsspellbooks.item.EnergizedCoreItem;
+import io.redspace.ironsspellbooks.item.FurledMapCraftableItem;
+import io.redspace.ironsspellbooks.item.FurledMapItem;
+import io.redspace.ironsspellbooks.item.InkItem;
+import io.redspace.ironsspellbooks.item.NecronomiconSpellBook;
+import io.redspace.ironsspellbooks.item.PortalFrameBlockItem;
+import io.redspace.ironsspellbooks.item.RuinedBookItem;
+import io.redspace.ironsspellbooks.item.Scroll;
+import io.redspace.ironsspellbooks.item.ShrivingStoneItem;
+import io.redspace.ironsspellbooks.item.SimpleDescriptiveBlockItem;
+import io.redspace.ironsspellbooks.item.SimpleDescriptiveItem;
+import io.redspace.ironsspellbooks.item.SpellBook;
+import io.redspace.ironsspellbooks.item.SpellSlotUpgradeItem;
+import io.redspace.ironsspellbooks.item.UniqueSpellBook;
+import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
+import io.redspace.ironsspellbooks.item.WaywardCompass;
+import io.redspace.ironsspellbooks.item.armor.ArchevokerArmorItem;
+import io.redspace.ironsspellbooks.item.armor.BootsOfSpeedArmorItem;
+import io.redspace.ironsspellbooks.item.armor.CryomancerArmorItem;
+import io.redspace.ironsspellbooks.item.armor.CultistArmorItem;
+import io.redspace.ironsspellbooks.item.armor.ElectromancerArmorItem;
+import io.redspace.ironsspellbooks.item.armor.GoldCrownArmorItem;
+import io.redspace.ironsspellbooks.item.armor.InfernalSorcererArmorItem;
+import io.redspace.ironsspellbooks.item.armor.NetheriteMageArmorItem;
+import io.redspace.ironsspellbooks.item.armor.PaladinArmorItem;
+import io.redspace.ironsspellbooks.item.armor.PlaguedArmorItem;
+import io.redspace.ironsspellbooks.item.armor.PriestArmorItem;
+import io.redspace.ironsspellbooks.item.armor.PumpkinArmorItem;
+import io.redspace.ironsspellbooks.item.armor.PyromancerArmorItem;
+import io.redspace.ironsspellbooks.item.armor.ShadowwalkerArmorItem;
+import io.redspace.ironsspellbooks.item.armor.TarnishedCrownArmorItem;
+import io.redspace.ironsspellbooks.item.armor.WanderingMagicianArmorItem;
+import io.redspace.ironsspellbooks.item.armor.WizardArmorItem;
+import io.redspace.ironsspellbooks.item.consumables.FireAleItem;
+import io.redspace.ironsspellbooks.item.consumables.NetherwardTinctureItem;
+import io.redspace.ironsspellbooks.item.consumables.SimpleElixir;
+import io.redspace.ironsspellbooks.item.curios.AffinityRing;
+import io.redspace.ironsspellbooks.item.curios.BetrayerSignetRingItem;
+import io.redspace.ironsspellbooks.item.curios.CurioBaseItem;
+import io.redspace.ironsspellbooks.item.curios.FirewardRing;
+import io.redspace.ironsspellbooks.item.curios.FrostwardRing;
+import io.redspace.ironsspellbooks.item.curios.InvisibiltyRing;
+import io.redspace.ironsspellbooks.item.curios.LurkerRing;
+import io.redspace.ironsspellbooks.item.curios.PoisonwardRing;
+import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
+import io.redspace.ironsspellbooks.item.curios.TeleportationAmuletItem;
+import io.redspace.ironsspellbooks.item.curios.VisibilityRing;
+import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
+import io.redspace.ironsspellbooks.item.weapons.AutoloaderCrossbow;
+import io.redspace.ironsspellbooks.item.weapons.ExtendedWeaponTier;
+import io.redspace.ironsspellbooks.item.weapons.HitherThitherWand;
+import io.redspace.ironsspellbooks.item.weapons.StaffItem;
+import io.redspace.ironsspellbooks.item.weapons.StaffOfTheNines;
+import io.redspace.ironsspellbooks.item.weapons.StaffTier;
+import io.redspace.ironsspellbooks.item.weapons.TwilightGaleItem;
+import io.redspace.ironsspellbooks.item.weapons.pyrium_staff.PyriumStaffItem;
+import io.redspace.ironsspellbooks.render.CinderousRarity;
+import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
+import java.util.Collection;
+import java.util.Optional;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DiscFragmentItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.SimpleFoiledItem;
+import net.minecraft.world.item.ArmorItem.Type;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ItemRegistry {
+   private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.f_256913_, "irons_spellbooks");
+   public static final RegistryObject<Item> WIMPY_SPELL_BOOK = ITEMS.register(
+      "wimpy_spell_book", () -> new SpellBook(0, new Properties().m_41487_(1).m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> LEGENDARY_SPELL_BOOK = ITEMS.register(
+      "legendary_spell_book", () -> new SpellBook(12, new Properties().m_41487_(1).m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> NETHERITE_SPELL_BOOK = ITEMS.register(
+      "netherite_spell_book",
+      () -> new SpellBook(12)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.2, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> DIAMOND_SPELL_BOOK = ITEMS.register(
+      "diamond_spell_book", () -> new SpellBook(10).withSpellbookAttributes(new AttributeContainer(AttributeRegistry.MAX_MANA, 100.0, Operation.ADDITION))
+   );
+   public static final RegistryObject<Item> GOLD_SPELL_BOOK = ITEMS.register(
+      "gold_spell_book",
+      () -> new SpellBook(8)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.CAST_TIME_REDUCTION, 0.15, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 50.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> IRON_SPELL_BOOK = ITEMS.register("iron_spell_book", () -> new SpellBook(6));
+   public static final RegistryObject<Item> COPPER_SPELL_BOOK = ITEMS.register("copper_spell_book", () -> new SpellBook(5));
+   public static final RegistryObject<Item> ROTTEN_SPELL_BOOK = ITEMS.register(
+      "rotten_spell_book",
+      () -> new SpellBook(8)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.SPELL_RESIST, -0.15, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 100.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> BLAZE_SPELL_BOOK = ITEMS.register(
+      "blaze_spell_book",
+      () -> new SpellBook(10)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.FIRE_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> DRAGONSKIN_SPELL_BOOK = ITEMS.register(
+      "dragonskin_spell_book",
+      () -> new SpellBook(12)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.ENDER_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> DRUIDIC_SPELL_BOOK = ITEMS.register(
+      "druidic_spell_book",
+      () -> new SpellBook(10)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.NATURE_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> VILLAGER_SPELL_BOOK = ITEMS.register(
+      "villager_spell_book",
+      () -> new SpellBook(10)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.HOLY_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.CAST_TIME_REDUCTION, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> ICE_SPELL_BOOK = ITEMS.register(
+      "ice_spell_book",
+      () -> new SpellBook(12)
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.ICE_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> GRAYBEARD_STAFF = ITEMS.register(
+      "graybeard_staff", () -> new StaffItem(ItemPropertiesHelper.equipment(1), StaffTier.GRAYBEARD)
+   );
+   public static final RegistryObject<Item> PYRIUM_STAFF = ITEMS.register(
+      "pyrium_staff", () -> new PyriumStaffItem(ItemPropertiesHelper.equipment(1).m_41497_(CinderousRarity.CINDEROUS_RARITY).m_41486_())
+   );
+   public static final RegistryObject<Item> ARTIFICER_STAFF = ITEMS.register(
+      "artificer_cane", () -> new StaffItem(ItemPropertiesHelper.equipment(1), StaffTier.ARTIFICER)
+   );
+   public static final RegistryObject<Item> ICE_STAFF = ITEMS.register(
+      "ice_staff", () -> new StaffItem(ItemPropertiesHelper.equipment(1).m_41497_(Rarity.RARE), StaffTier.ICE_STAFF)
+   );
+   public static final RegistryObject<Item> LIGHTNING_ROD_STAFF = ITEMS.register(
+      "lightning_rod", () -> new StaffItem(ItemPropertiesHelper.equipment(1).m_41486_().m_41497_(Rarity.UNCOMMON), StaffTier.LIGHTNING_ROD)
+   );
+   public static final RegistryObject<Item> BLOOD_STAFF = ITEMS.register(
+      "blood_staff", () -> new StaffItem(ItemPropertiesHelper.equipment(1).m_41497_(Rarity.UNCOMMON), StaffTier.BLOOD_STAFF)
+   );
+   public static final RegistryObject<Item> EVOKER_SPELL_BOOK = ITEMS.register(
+      "evoker_spell_book",
+      () -> new UniqueSpellBook(
+            new SpellDataRegistryHolder[]{
+               new SpellDataRegistryHolder(SpellRegistry.FANG_STRIKE_SPELL, 6),
+               new SpellDataRegistryHolder(SpellRegistry.FANG_WARD_SPELL, 4),
+               new SpellDataRegistryHolder(SpellRegistry.SUMMON_VEX_SPELL, 4)
+            },
+            7
+         )
+         .withSpellbookAttributes(
+            new AttributeContainer(AttributeRegistry.EVOCATION_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE),
+            new AttributeContainer(AttributeRegistry.MAX_MANA, 200.0, Operation.ADDITION)
+         )
+   );
+   public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon_spell_book", NecronomiconSpellBook::new);
+   public static final RegistryObject<Item> CURSED_DOLL_SPELLBOOK = ITEMS.register("cursed_doll_spell_book", CursedDollSpellbookItem::new);
+   public static final RegistryObject<Item> MAGEHUNTER = ITEMS.register(
+      "magehunter", () -> new ExtendedSwordItem(ExtendedWeaponTier.METAL_MAGEHUNTER, ItemPropertiesHelper.equipment())
+   );
+   public static final RegistryObject<Item> SPELLBREAKER = ITEMS.register(
+      "spellbreaker",
+      () -> new MagicSwordItem(
+         ExtendedWeaponTier.SPELLBREAKER,
+         ItemPropertiesHelper.equipment().m_41497_(Rarity.EPIC),
+         SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.COUNTERSPELL_SPELL, 1))
+      )
+   );
+   public static final RegistryObject<Item> TEST_CLAYMORE = ITEMS.register(
+      "claymore", () -> new ExtendedSwordItem(ExtendedWeaponTier.CLAYMORE, ItemPropertiesHelper.hidden())
+   );
+   public static final RegistryObject<Item> KEEPER_FLAMBERGE = ITEMS.register(
+      "keeper_flamberge",
+      () -> new ExtendedSwordItem(ExtendedWeaponTier.DECREPIT_FLAMBERGE, ItemPropertiesHelper.equipment().m_41497_(Rarity.UNCOMMON).m_41486_())
+   );
+   public static final RegistryObject<Item> LEGIONNAIRE_FLAMBERGE = ITEMS.register(
+      "legionnaire_flamberge",
+      () -> new ExtendedSwordItem(
+         ExtendedWeaponTier.LEGIONNAIRE_FLAMBERGE, ItemPropertiesHelper.equipment().m_41497_(CinderousRarity.CINDEROUS_RARITY).m_41486_()
+      )
+   );
+   public static final RegistryObject<Item> AMETHYST_RAPIER = ITEMS.register(
+      "amethyst_rapier",
+      () -> new MagicSwordItem(
+         ExtendedWeaponTier.AMETHYST_RAPIER,
+         ItemPropertiesHelper.equipment().m_41497_(Rarity.EPIC),
+         SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.ECHOING_STRIKES_SPELL, 5))
+      )
+   );
+   public static final RegistryObject<Item> MISERY = ITEMS.register(
+      "misery",
+      () -> new MagicSwordItem(
+         ExtendedWeaponTier.MISERY, ItemPropertiesHelper.hidden(), SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.WITHER_SKULL_SPELL, 8))
+      )
+   );
+   public static final RegistryObject<Item> SCROLL = ITEMS.register("scroll", Scroll::new);
+   public static final RegistryObject<Item> AUTOLOADER_CROSSBOW = ITEMS.register(
+      "autoloader_crossbow", () -> new AutoloaderCrossbow(ItemPropertiesHelper.hidden(1).m_41503_(465))
+   );
+   public static final RegistryObject<Item> HITHER_THITHER_WAND = ITEMS.register(
+      "hither_thither_wand", () -> new HitherThitherWand(ItemPropertiesHelper.equipment(1).m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> STAFF_OF_THE_NINES = ITEMS.register(
+      "staff_of_the_nines", () -> new StaffOfTheNines(ItemPropertiesHelper.hidden(1).m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> HELLRAZOR = ITEMS.register(
+      "hellrazor",
+      () -> new MagicSwordItem(
+         ExtendedWeaponTier.HELLRAZOR,
+         ItemPropertiesHelper.equipment().m_41497_(CinderousRarity.CINDEROUS_RARITY).m_41486_(),
+         SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.RAISE_HELL_SPELL, 3))
+      )
+   );
+   public static final RegistryObject<Item> DECREPIT_SCYTHE = ITEMS.register(
+      "decrepit_scythe", () -> new ExtendedSwordItem(ExtendedWeaponTier.DECREPIT_SCYTHE, ItemPropertiesHelper.equipment().m_41497_(Rarity.UNCOMMON).m_41486_())
+   );
+   public static final RegistryObject<Item> ICE_GREATSWORD = ITEMS.register(
+      "boreal_blade",
+      () -> new MagicSwordItem(
+         ExtendedWeaponTier.ICE_GREATSWORD,
+         ItemPropertiesHelper.equipment().m_41497_(Rarity.RARE).m_41486_(),
+         SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.FROSTBITE_SPELL, 3))
+      )
+   );
+   public static final RegistryObject<Item> TWILIGHT_GALE = ITEMS.register(
+      "twilight_gale",
+      () -> new TwilightGaleItem(
+         ExtendedWeaponTier.TWILIGHT_GALE,
+         ItemPropertiesHelper.equipment().m_41497_(Rarity.RARE).m_41486_(),
+         SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.VOLT_STRIKE_SPELL, 5))
+      )
+   );
+   public static final RegistryObject<Item> INK_COMMON = ITEMS.register("common_ink", () -> new InkItem(SpellRarity.COMMON, FluidRegistry.COMMON_INK));
+   public static final RegistryObject<Item> INK_UNCOMMON = ITEMS.register("uncommon_ink", () -> new InkItem(SpellRarity.UNCOMMON, FluidRegistry.UNCOMMON_INK));
+   public static final RegistryObject<Item> INK_RARE = ITEMS.register("rare_ink", () -> new InkItem(SpellRarity.RARE, FluidRegistry.RARE_INK));
+   public static final RegistryObject<Item> INK_EPIC = ITEMS.register("epic_ink", () -> new InkItem(SpellRarity.EPIC, FluidRegistry.EPIC_INK));
+   public static final RegistryObject<Item> INK_LEGENDARY = ITEMS.register(
+      "legendary_ink", () -> new InkItem(SpellRarity.LEGENDARY, FluidRegistry.LEGENDARY_INK)
+   );
+   public static final RegistryObject<Item> OAKSKIN_ELIXIR = ITEMS.register(
+      "oakskin_elixir",
+      () -> new SimpleElixir(ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.OAKSKIN.get(), 900, 1))
+   );
+   public static final RegistryObject<Item> GREATER_OAKSKIN_ELIXIR = ITEMS.register(
+      "greater_oakskin_elixir",
+      () -> new SimpleElixir(ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.OAKSKIN.get(), 1800, 5), true)
+   );
+   public static final RegistryObject<Item> GREATER_HEALING_POTION = ITEMS.register(
+      "greater_healing_potion", () -> new SimpleElixir(ItemPropertiesHelper.material(4), () -> new MobEffectInstance(MobEffects.f_19601_, 1, 2))
+   );
+   public static final RegistryObject<Item> INVISIBILITY_ELIXIR = ITEMS.register(
+      "invisibility_elixir",
+      () -> new SimpleElixir(
+         ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.TRUE_INVISIBILITY.get(), 300, 0, false, false, true)
+      )
+   );
+   public static final RegistryObject<Item> GREATER_INVISIBILITY_ELIXIR = ITEMS.register(
+      "greater_invisibility_elixir",
+      () -> new SimpleElixir(
+         ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.TRUE_INVISIBILITY.get(), 800, 0, false, false, true), true
+      )
+   );
+   public static final RegistryObject<Item> EVASION_ELIXIR = ITEMS.register(
+      "evasion_elixir",
+      () -> new SimpleElixir(
+         ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.EVASION.get(), 1200, 1, false, false, true)
+      )
+   );
+   public static final RegistryObject<Item> GREATER_EVASION_ELIXIR = ITEMS.register(
+      "greater_evasion_elixir",
+      () -> new SimpleElixir(
+         ItemPropertiesHelper.material(4), () -> new MobEffectInstance((MobEffect)MobEffectRegistry.EVASION.get(), 1200, 3, false, false, true), true
+      )
+   );
+   public static final RegistryObject<Item> FIRE_ALE = ITEMS.register("fire_ale", () -> new FireAleItem(ItemPropertiesHelper.material(4)));
+   public static final RegistryObject<Item> NETHERWARD_TINCTURE = ITEMS.register("netherward_tincture", NetherwardTinctureItem::new);
+   public static final RegistryObject<Item> UPGRADE_ORB = ITEMS.register(
+      "upgrade_orb", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> FIRE_UPGRADE_ORB = ITEMS.register(
+      "fire_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.FIRE_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> ICE_UPGRADE_ORB = ITEMS.register(
+      "ice_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.ICE_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> LIGHTNING_UPGRADE_ORB = ITEMS.register(
+      "lightning_upgrade_orb",
+      () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.LIGHTNING_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> HOLY_UPGRADE_ORB = ITEMS.register(
+      "holy_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.HOLY_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> ENDER_UPGRADE_ORB = ITEMS.register(
+      "ender_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.ENDER_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> BLOOD_UPGRADE_ORB = ITEMS.register(
+      "blood_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.BLOOD_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> EVOCATION_UPGRADE_ORB = ITEMS.register(
+      "evocation_upgrade_orb",
+      () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.EVOCATION_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> NATURE_UPGRADE_ORB = ITEMS.register(
+      "nature_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.NATURE_SPELL_POWER)
+   );
+   public static final RegistryObject<Item> MANA_UPGRADE_ORB = ITEMS.register(
+      "mana_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.MANA)
+   );
+   public static final RegistryObject<Item> COOLDOWN_UPGRADE_ORB = ITEMS.register(
+      "cooldown_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.COOLDOWN)
+   );
+   public static final RegistryObject<Item> PROTECTION_UPGRADE_ORB = ITEMS.register(
+      "protection_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON), UpgradeOrbTypeRegistry.SPELL_RESISTANCE)
+   );
+   public static final RegistryObject<Item> LIGHTNING_BOTTLE = ITEMS.register(
+      "lightning_bottle", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> FROZEN_BONE_SHARD = ITEMS.register("frozen_bone", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> BLOOD_VIAL = ITEMS.register("blood_vial", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> ICE_VENOM_VIAL = ITEMS.register("ice_venom_vial", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> DIVINE_PEARL = ITEMS.register("divine_pearl", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> FURLED_MAP = ITEMS.register("furled_map", FurledMapItem::new);
+   public static final RegistryObject<Item> ANCIENT_FURLED_MAP = ITEMS.register("furled_map_ancient", FurledMapItem::new);
+   public static final RegistryObject<Item> CITADEL_FURLED_MAP = ITEMS.register(
+      "furled_map_citadel",
+      () -> new FurledMapCraftableItem(
+         true,
+         new FurledMapItem.FurledMapData(
+            IronsSpellbooks.id("citadel"),
+            Optional.of(FurledMapItem.NETHER),
+            Optional.of(
+               Component.m_237110_(
+                     "item.irons_spellbooks.furled_map_descriptor_framing", new Object[]{Component.m_237115_("item.irons_spellbooks.citadel_map")}
+                  )
+                  .m_6270_(Style.f_131099_.m_131140_(ChatFormatting.GOLD))
+            )
+         )
+      )
+   );
+   public static final RegistryObject<Item> ICE_SPIDER_FURLED_MAP = ITEMS.register(
+      "furled_map_ice_spider_den",
+      () -> new FurledMapCraftableItem(
+         false,
+         new FurledMapItem.FurledMapData(
+            IronsSpellbooks.id("ice_spider_den"),
+            Optional.of(FurledMapItem.OVERWORLD),
+            Optional.of(
+               Component.m_237110_(
+                     "item.irons_spellbooks.furled_map_descriptor_framing", new Object[]{Component.m_237115_("item.irons_spellbooks.ice_spider_den_map")}
+                  )
+                  .m_6270_(Style.f_131099_.m_131140_(ChatFormatting.GOLD))
+            )
+         )
+      )
+   );
+   public static final RegistryObject<Item> HOGSKIN = ITEMS.register("hogskin", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> DRAGONSKIN = ITEMS.register("dragonskin", DragonskinItem::new);
+   public static final RegistryObject<Item> ARCANE_ESSENCE = ITEMS.register("arcane_essence", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> MAGIC_CLOTH = ITEMS.register("magic_cloth", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> BLANK_RUNE = ITEMS.register("blank_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> FIRE_RUNE = ITEMS.register("fire_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> ICE_RUNE = ITEMS.register("ice_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> LIGHTNING_RUNE = ITEMS.register("lightning_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> ENDER_RUNE = ITEMS.register("ender_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> HOLY_RUNE = ITEMS.register("holy_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> BLOOD_RUNE = ITEMS.register("blood_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> EVOCATION_RUNE = ITEMS.register("evocation_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> MANA_RUNE = ITEMS.register("arcane_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> COOLDOWN_RUNE = ITEMS.register("cooldown_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> PROTECTION_RUNE = ITEMS.register("protection_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> NATURE_RUNE = ITEMS.register("nature_rune", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> WAYWARD_COMPASS = ITEMS.register("wayward_compass", WaywardCompass::new);
+   public static final RegistryObject<Item> RUINED_BOOK = ITEMS.register(
+      "ruined_book", () -> new RuinedBookItem(ItemPropertiesHelper.material().m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> CINDER_ESSENCE = ITEMS.register("cinder_essence", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> ARCANE_INGOT = ITEMS.register("arcane_ingot", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> SHRIVING_STONE = ITEMS.register("shriving_stone", ShrivingStoneItem::new);
+   public static final RegistryObject<Item> LESSER_SPELL_SLOT_UPGRADE = ITEMS.register("lesser_spell_slot_upgrade", () -> new SpellSlotUpgradeItem(12));
+   public static final RegistryObject<Item> ELDRITCH_PAGE = ITEMS.register(
+      "eldritch_manuscript", () -> new EldritchManuscript(ItemPropertiesHelper.material().m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> LOST_KNOWLEDGE_FRAGMENT = ITEMS.register(
+      "ancient_knowledge_fragment", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> FROSTED_HELVE = ITEMS.register(
+      "frosted_helve", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.COMMON))
+   );
+   public static final RegistryObject<Item> ICE_CRYSTAL = ITEMS.register(
+      "permafrost_shard", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE))
+   );
+   public static final RegistryObject<Item> ENERGIZED_CORE = ITEMS.register(
+      "energized_core", () -> new EnergizedCoreItem(ItemPropertiesHelper.material(1).m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> CHAINED_BOOK = ITEMS.register("chained_book", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> BLOODY_VELLUM = ITEMS.register("bloody_vellum", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> ICY_FANG = ITEMS.register("icy_fang", () -> new Item(ItemPropertiesHelper.material()));
+   public static final RegistryObject<Item> TIMELESS_SLURRY = ITEMS.register(
+      "timeless_slurry", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> PYRIUM_INGOT = ITEMS.register(
+      "pyrium_ingot", () -> new Item(ItemPropertiesHelper.material().m_41497_(CinderousRarity.CINDEROUS_RARITY).m_41486_())
+   );
+   public static final RegistryObject<Item> RAW_MITHRIL = ITEMS.register("raw_mithril", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE)));
+   public static final RegistryObject<Item> MITHRIL_SCRAP = ITEMS.register(
+      "mithril_scrap", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE))
+   );
+   public static final RegistryObject<Item> MITHRIL_INGOT = ITEMS.register(
+      "mithril_ingot", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE))
+   );
+   public static final RegistryObject<Item> MITHRIL_WEAVE = ITEMS.register(
+      "mithril_weave", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE))
+   );
+   public static final RegistryObject<Item> WEAPON_PARTS = ITEMS.register("weapon_parts", () -> new Item(ItemPropertiesHelper.material().m_41497_(Rarity.RARE)));
+   public static final RegistryObject<Item> DIVINE_SOULSHARD = ITEMS.register(
+      "divine_soulshard", () -> new SimpleFoiledItem(ItemPropertiesHelper.material().m_41497_(Rarity.EPIC).m_41486_())
+   );
+   public static final RegistryObject<Item> TRANSLATED_ARCHEVOKER_LOGBOOK = ITEMS.register(
+      "archevoker_logbook_translated", () -> new ArchevokerLogbookItem(true, new Properties())
+   );
+   public static final RegistryObject<Item> UNTRANSLATED_ARCHEVOKER_LOGBOOK = ITEMS.register(
+      "archevoker_logbook_untranslated", () -> new ArchevokerLogbookItem(false, new Properties())
+   );
+   public static final RegistryObject<Item> THE_CHRONICLE = ITEMS.register(
+      "chronicle", () -> new ChronicleItem(new Properties().m_41487_(1).m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> CINDEROUS_SOULCALLER = ITEMS.register(
+      "cinderous_soulcaller", () -> new CinderousSoulcallerItem(ItemPropertiesHelper.material(1).m_41497_(CinderousRarity.CINDEROUS_RARITY).m_41486_())
+   );
+   public static final RegistryObject<Item> DECREPIT_KEY = ITEMS.register(
+      "decrepit_key", () -> new SimpleDescriptiveItem(ItemPropertiesHelper.material().m_41497_(Rarity.UNCOMMON).m_41486_())
+   );
+   public static final RegistryObject<Item> INSCRIPTION_TABLE_BLOCK_ITEM = ITEMS.register(
+      "inscription_table", () -> new BlockItem((Block)BlockRegistry.INSCRIPTION_TABLE_BLOCK.get(), new Properties())
+   );
+   public static final RegistryObject<Item> ACANE_ANVIL_BLOCK_ITEM = ITEMS.register(
+      "arcane_anvil", () -> new BlockItem((Block)BlockRegistry.ARCANE_ANVIL_BLOCK.get(), new Properties().m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<Item> SCROLL_FORGE_BLOCK = ITEMS.register(
+      "scroll_forge", () -> new BlockItem((Block)BlockRegistry.SCROLL_FORGE_BLOCK.get(), new Properties().m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> PEDESTAL_BLOCK_ITEM = ITEMS.register(
+      "pedestal", () -> new BlockItem((Block)BlockRegistry.PEDESTAL_BLOCK.get(), new Properties())
+   );
+   public static final RegistryObject<Item> ARMOR_PILE_BLOCK_ITEM = ITEMS.register(
+      "armor_pile", () -> new BlockItem((Block)BlockRegistry.ARMOR_PILE_BLOCK.get(), new Properties())
+   );
+   public static final RegistryObject<Item> MITHRIL_ORE_BLOCK_ITEM = ITEMS.register(
+      "mithril_ore", () -> new BlockItem((Block)BlockRegistry.MITHRIL_ORE.get(), new Properties())
+   );
+   public static final RegistryObject<Item> MITHRIL_ORE_DEEPSLATE_BLOCK_ITEM = ITEMS.register(
+      "deepslate_mithril_ore", () -> new BlockItem((Block)BlockRegistry.MITHRIL_ORE_DEEPSLATE.get(), new Properties())
+   );
+   public static final RegistryObject<Item> ALCHEMIST_CAULDRON_BLOCK_ITEM = ITEMS.register(
+      "alchemist_cauldron", () -> new BlockItem((Block)BlockRegistry.ALCHEMIST_CAULDRON.get(), new Properties())
+   );
+   public static final RegistryObject<Item> FIREFLY_JAR_ITEM = ITEMS.register(
+      "firefly_jar", () -> new BlockItem((Block)BlockRegistry.FIREFLY_JAR.get(), new Properties())
+   );
+   public static final RegistryObject<Item> PORTAL_FRAME_ITEM = ITEMS.register("portal_frame", PortalFrameBlockItem::new);
+   public static final RegistryObject<Item> BRAZIER_ITEM = ITEMS.register(
+      "brazier", () -> new BlockItem((Block)BlockRegistry.BRAZIER_FIRE.get(), new Properties())
+   );
+   public static final RegistryObject<Item> SOUL_BRAZIER_ITEM = ITEMS.register(
+      "brazier_soul", () -> new BlockItem((Block)BlockRegistry.BRAZIER_SOUL.get(), new Properties())
+   );
+   public static final RegistryObject<Item> CINDEROUS_KEYSTONE_BLOCK_ITEM = ITEMS.register(
+      "cinderous_soul_rune", () -> new BlockItem((Block)BlockRegistry.CINDEROUS_KEYSTONE.get(), new Properties().m_41497_(CinderousRarity.CINDEROUS_RARITY))
+   );
+   public static final RegistryObject<Item> ICE_SPIDER_EGG_BLOCK_ITEM = ITEMS.register(
+      "ice_spider_egg", () -> new BlockItem((Block)BlockRegistry.ICE_SPIDER_EGG.get(), new Properties().m_41497_(Rarity.RARE))
+   );
+   public static final RegistryObject<Item> ARCANE_SALVAGE = ITEMS.register("arcane_salvage", ArcaneSalvageItem::new);
+   public static final RegistryObject<Item> ARCANE_DEBRIS_BLOCK_ITEM = ITEMS.register(
+      "arcane_debris", () -> new BlockItem((Block)BlockRegistry.ARCANE_DEBRIS.get(), new Properties())
+   );
+   public static final RegistryObject<Item> BOOK_STACK_BLOCK_ITEM = ITEMS.register(
+      "book_stack", () -> new SimpleDescriptiveBlockItem((Block)BlockRegistry.BOOK_STACK.get(), new Properties())
+   );
+   public static final RegistryObject<Item> WISEWOOD_BOOKSHELF_BLOCK_ITEM = ITEMS.register(
+      "wisewood_bookshelf", () -> new BlockItem((Block)BlockRegistry.WISEWOOD_BOOKSHELF.get(), new Properties())
+   );
+   public static final RegistryObject<Item> NETHER_BRICK_PILLAR_BLOCK_ITEM = ITEMS.register(
+      "nether_brick_pillar", () -> new BlockItem((Block)BlockRegistry.NETHER_BRICK_PILLAR.get(), new Properties())
+   );
+   public static final RegistryObject<Item> TRIAL_SPAWNER_BLOCK_ITEM = ITEMS.register(
+      "trial_spawner", () -> new BlockItem((Block)BlockRegistry.TRIAL_SPAWNER.get(), new Properties())
+   );
+   public static final RegistryObject<Item> VAULT_BLOCK_ITEM = ITEMS.register("vault", () -> new BlockItem((Block)BlockRegistry.VAULT.get(), new Properties()));
+   public static final RegistryObject<Item> WANDERING_MAGICIAN_HELMET = ITEMS.register(
+      "wandering_magician_helmet", () -> new WanderingMagicianArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WANDERING_MAGICIAN_CHESTPLATE = ITEMS.register(
+      "wandering_magician_chestplate", () -> new WanderingMagicianArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WANDERING_MAGICIAN_LEGGINGS = ITEMS.register(
+      "wandering_magician_leggings", () -> new WanderingMagicianArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WANDERING_MAGICIAN_BOOTS = ITEMS.register(
+      "wandering_magician_boots", () -> new WanderingMagicianArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PUMPKIN_HELMET = ITEMS.register(
+      "pumpkin_helmet", () -> new PumpkinArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PUMPKIN_CHESTPLATE = ITEMS.register(
+      "pumpkin_chestplate", () -> new PumpkinArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PUMPKIN_LEGGINGS = ITEMS.register(
+      "pumpkin_leggings", () -> new PumpkinArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PUMPKIN_BOOTS = ITEMS.register(
+      "pumpkin_boots", () -> new PumpkinArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PYROMANCER_HELMET = ITEMS.register(
+      "pyromancer_helmet", () -> new PyromancerArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PYROMANCER_CHESTPLATE = ITEMS.register(
+      "pyromancer_chestplate", () -> new PyromancerArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PYROMANCER_LEGGINGS = ITEMS.register(
+      "pyromancer_leggings", () -> new PyromancerArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PYROMANCER_BOOTS = ITEMS.register(
+      "pyromancer_boots", () -> new PyromancerArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ELECTROMANCER_HELMET = ITEMS.register(
+      "electromancer_helmet", () -> new ElectromancerArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ELECTROMANCER_CHESTPLATE = ITEMS.register(
+      "electromancer_chestplate", () -> new ElectromancerArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ELECTROMANCER_LEGGINGS = ITEMS.register(
+      "electromancer_leggings", () -> new ElectromancerArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ELECTROMANCER_BOOTS = ITEMS.register(
+      "electromancer_boots", () -> new ElectromancerArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ARCHEVOKER_HELMET = ITEMS.register(
+      "archevoker_helmet", () -> new ArchevokerArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ARCHEVOKER_CHESTPLATE = ITEMS.register(
+      "archevoker_chestplate", () -> new ArchevokerArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ARCHEVOKER_LEGGINGS = ITEMS.register(
+      "archevoker_leggings", () -> new ArchevokerArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> ARCHEVOKER_BOOTS = ITEMS.register(
+      "archevoker_boots", () -> new ArchevokerArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CULTIST_HELMET = ITEMS.register(
+      "cultist_helmet", () -> new CultistArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CULTIST_CHESTPLATE = ITEMS.register(
+      "cultist_chestplate", () -> new CultistArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CULTIST_LEGGINGS = ITEMS.register(
+      "cultist_leggings", () -> new CultistArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CULTIST_BOOTS = ITEMS.register(
+      "cultist_boots", () -> new CultistArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CRYOMANCER_HELMET = ITEMS.register(
+      "cryomancer_helmet", () -> new CryomancerArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CRYOMANCER_CHESTPLATE = ITEMS.register(
+      "cryomancer_chestplate", () -> new CryomancerArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CRYOMANCER_LEGGINGS = ITEMS.register(
+      "cryomancer_leggings", () -> new CryomancerArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> CRYOMANCER_BOOTS = ITEMS.register(
+      "cryomancer_boots", () -> new CryomancerArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> SHADOWWALKER_HELMET = ITEMS.register(
+      "shadowwalker_helmet", () -> new ShadowwalkerArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> SHADOWWALKER_CHESTPLATE = ITEMS.register(
+      "shadowwalker_chestplate", () -> new ShadowwalkerArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> SHADOWWALKER_LEGGINGS = ITEMS.register(
+      "shadowwalker_leggings", () -> new ShadowwalkerArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> SHADOWWALKER_BOOTS = ITEMS.register(
+      "shadowwalker_boots", () -> new ShadowwalkerArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PRIEST_HELMET = ITEMS.register(
+      "priest_helmet", () -> new PriestArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PRIEST_CHESTPLATE = ITEMS.register(
+      "priest_chestplate", () -> new PriestArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PRIEST_LEGGINGS = ITEMS.register(
+      "priest_leggings", () -> new PriestArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PRIEST_BOOTS = ITEMS.register(
+      "priest_boots", () -> new PriestArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PLAGUED_HELMET = ITEMS.register(
+      "plagued_helmet", () -> new PlaguedArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PLAGUED_CHESTPLATE = ITEMS.register(
+      "plagued_chestplate", () -> new PlaguedArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PLAGUED_LEGGINGS = ITEMS.register(
+      "plagued_leggings", () -> new PlaguedArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PLAGUED_BOOTS = ITEMS.register(
+      "plagued_boots", () -> new PlaguedArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> NETHERITE_MAGE_HELMET = ITEMS.register(
+      "netherite_mage_helmet", () -> new NetheriteMageArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1).m_41486_())
+   );
+   public static final RegistryObject<Item> NETHERITE_MAGE_CHESTPLATE = ITEMS.register(
+      "netherite_mage_chestplate", () -> new NetheriteMageArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1).m_41486_())
+   );
+   public static final RegistryObject<Item> NETHERITE_MAGE_LEGGINGS = ITEMS.register(
+      "netherite_mage_leggings", () -> new NetheriteMageArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1).m_41486_())
+   );
+   public static final RegistryObject<Item> NETHERITE_MAGE_BOOTS = ITEMS.register(
+      "netherite_mage_boots", () -> new NetheriteMageArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1).m_41486_())
+   );
+   public static final RegistryObject<Item> WIZARD_HELMET = ITEMS.register(
+      "wizard_helmet", () -> new WizardArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WIZARD_HAT = ITEMS.register("wizard_hat", () -> new WizardArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1)));
+   public static final RegistryObject<Item> WIZARD_CHESTPLATE = ITEMS.register(
+      "wizard_chestplate", () -> new WizardArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WIZARD_LEGGINGS = ITEMS.register(
+      "wizard_leggings", () -> new WizardArmorItem(Type.LEGGINGS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> WIZARD_BOOTS = ITEMS.register(
+      "wizard_boots", () -> new WizardArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1))
+   );
+   public static final RegistryObject<Item> PALADIN_CHESTPLATE = ITEMS.register(
+      "paladin_chestplate", () -> new PaladinArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1).m_41497_(Rarity.EPIC).m_41486_())
+   );
+   public static final RegistryObject<Item> BOOTS_OF_SPEED = ITEMS.register(
+      "speed_boots", () -> new BootsOfSpeedArmorItem(Type.BOOTS, ItemPropertiesHelper.equipment(1).m_41497_(Rarity.EPIC).m_41486_())
+   );
+   public static final RegistryObject<Item> INFERNAL_SORCERER_CHESTPLATE = ITEMS.register(
+      "infernal_sorcerer_chestplate", () -> new InfernalSorcererArmorItem(Type.CHESTPLATE, ItemPropertiesHelper.equipment(1).m_41497_(Rarity.EPIC).m_41486_())
+   );
+   public static final RegistryObject<Item> TARNISHED_CROWN = ITEMS.register(
+      "tarnished_helmet", () -> new TarnishedCrownArmorItem(Type.HELMET, ItemPropertiesHelper.equipment(1).m_41497_(Rarity.UNCOMMON))
+   );
+   public static final RegistryObject<Item> DEV_CROWN = ITEMS.register(
+      "gold_crown", () -> new GoldCrownArmorItem(Type.HELMET, ItemPropertiesHelper.hidden(1).m_41497_(Rarity.EPIC))
+   );
+   public static final RegistryObject<CurioBaseItem> MANA_RING = ITEMS.register(
+      "mana_ring",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.RING_SLOT, new AttributeContainer(AttributeRegistry.MAX_MANA, 100.0, Operation.ADDITION))
+   );
+   public static final RegistryObject<CurioBaseItem> SILVER_RING = ITEMS.register(
+      "silver_ring",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.RING_SLOT, new AttributeContainer(AttributeRegistry.MAX_MANA, 25.0, Operation.ADDITION))
+   );
+   public static final RegistryObject<CurioBaseItem> COOLDOWN_RING = ITEMS.register(
+      "cooldown_ring",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.RING_SLOT, new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> CAST_TIME_RING = ITEMS.register(
+      "cast_time_ring",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.RING_SLOT, new AttributeContainer(AttributeRegistry.CAST_TIME_REDUCTION, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> HEAVY_CHAIN = ITEMS.register(
+      "heavy_chain_necklace",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.NECKLACE_SLOT, new AttributeContainer(AttributeRegistry.SPELL_RESIST, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> EMERALD_STONEPLATE_RING = ITEMS.register(
+      "emerald_stoneplate_ring", () -> new SimpleDescriptiveCurio(ItemPropertiesHelper.equipment(1), Curios.RING_SLOT)
+   );
+   public static final RegistryObject<CurioBaseItem> FIREWARD_RING = ITEMS.register("fireward_ring", FirewardRing::new);
+   public static final RegistryObject<CurioBaseItem> FROSTWARD_RING = ITEMS.register("frostward_ring", FrostwardRing::new);
+   public static final RegistryObject<CurioBaseItem> POISONWARD_RING = ITEMS.register("poisonward_ring", PoisonwardRing::new);
+   public static final RegistryObject<CurioBaseItem> CONJURERS_TALISMAN = ITEMS.register(
+      "conjurers_talisman",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.NECKLACE_SLOT, new AttributeContainer(AttributeRegistry.SUMMON_DAMAGE, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> GREATER_CONJURERS_TALISMAN = ITEMS.register(
+      "greater_conjurers_talisman",
+      () -> new SimpleDescriptiveCurio(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.NECKLACE_SLOT, new AttributeContainer(AttributeRegistry.SUMMON_DAMAGE, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> AFFINITY_RING = ITEMS.register("affinity_ring", () -> new AffinityRing(ItemPropertiesHelper.equipment(1)));
+   public static final RegistryObject<CurioBaseItem> CONCENTRATION_AMULET = ITEMS.register(
+      "concentration_amulet", () -> new SimpleDescriptiveCurio(ItemPropertiesHelper.equipment(1), Curios.NECKLACE_SLOT)
+   );
+   public static final RegistryObject<CurioBaseItem> LURKER_RING = ITEMS.register("lurker_ring", LurkerRing::new);
+   public static final RegistryObject<CurioBaseItem> AMETHYST_RESONANCE_NECKLACE = ITEMS.register(
+      "amethyst_resonance_charm",
+      () -> new CurioBaseItem(ItemPropertiesHelper.equipment(1))
+         .withAttributes(Curios.NECKLACE_SLOT, new AttributeContainer(AttributeRegistry.MANA_REGEN, 0.15, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<CurioBaseItem> INVISIBILITY_RING = ITEMS.register("invisibility_ring", InvisibiltyRing::new);
+   public static final RegistryObject<CurioBaseItem> VISIBILITY_RING = ITEMS.register("visibility_ring", VisibilityRing::new);
+   public static final RegistryObject<CurioBaseItem> TELEPORTATION_AMULET = ITEMS.register(
+      "teleportation_amulet", () -> new TeleportationAmuletItem(ItemPropertiesHelper.equipment(1).m_41486_())
+   );
+   public static final RegistryObject<CurioBaseItem> SIGNET_OF_THE_BETRAYER = ITEMS.register(
+      "betrayer_signet",
+      () -> new BetrayerSignetRingItem()
+         .withAttributes(Curios.RING_SLOT, new AttributeContainer(AttributeRegistry.ELDRITCH_SPELL_POWER, 0.1, Operation.MULTIPLY_BASE))
+   );
+   public static final RegistryObject<Item> MUSIC_DISC_DEAD_KING_LULLABY = ITEMS.register(
+      "music_disc_dead_king_lullaby",
+      () -> new RecordItem(15, SoundRegistry.MUSIC_DISC_DEAD_KING_LULLABY, ItemPropertiesHelper.material(1).m_41497_(Rarity.RARE), 2740)
+   );
+   public static final RegistryObject<Item> MUSIC_DISC_FLAME_STILL_BURNS = ITEMS.register(
+      "music_disc_flame_still_burns",
+      () -> new RecordItem(15, SoundRegistry.MUSIC_DISC_FLAME_STILL_BURNS, ItemPropertiesHelper.material(1).m_41497_(CinderousRarity.CINDEROUS_RARITY), 2260)
+   );
+   public static final RegistryObject<Item> FLAME_STILL_BURNS_FRAGMENT = ITEMS.register(
+      "disc_fragment_flame_still_burns", () -> new DiscFragmentItem(ItemPropertiesHelper.material().m_41497_(CinderousRarity.CINDEROUS_RARITY))
+   );
+   public static final RegistryObject<Item> MUSIC_DISC_WHISPERS_OF_ICE = ITEMS.register(
+      "music_disc_whispers_of_ice",
+      () -> new RecordItem(15, SoundRegistry.MUSIC_DISC_WHISPERS_OF_ICE, ItemPropertiesHelper.material(1).m_41497_(Rarity.RARE), 3080)
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> KEEPER_SPAWN_EGG = ITEMS.register(
+      "keeper_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.KEEPER, 3484973, 7760502, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> DEAD_KING_CORPSE_SPAWN_EGG = ITEMS.register(
+      "dead_king_corpse_spawn_egg",
+      () -> new ForgeSpawnEggItem(EntityRegistry.DEAD_KING_CORPSE, 6842447, 15066584, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> ARCHEVOKER_SPAWN_EGG = ITEMS.register(
+      "archevoker_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.ARCHEVOKER, 789516, 13412440, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> NECROMANCER_SPAWN_EGG = ITEMS.register(
+      "necromancer_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.NECROMANCER, 4074272, 5331255, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> CRYOMANCER_SPAWN_EGG = ITEMS.register(
+      "cryomancer_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.CRYOMANCER, 16777215, 9961453, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> PYROMANCER_SPAWN_EGG = ITEMS.register(
+      "pyromancer_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.PYROMANCER, 7999504, 2499877, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> PRIEST_SPAWN_EGG = ITEMS.register(
+      "priest_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.PRIEST, 16777215, 16768600, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> APOTHECARIST_SPAWN_EGG = ITEMS.register(
+      "apothecarist_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.APOTHECARIST, 3626026, 13931127, ItemPropertiesHelper.material().m_41487_(64))
+   );
+   public static final RegistryObject<ForgeSpawnEggItem> ICE_SPIDER_SPAWN_EGG = ITEMS.register(
+      "ice_spider_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.ICE_SPIDER, 8552850, 16119275, ItemPropertiesHelper.material().m_41487_(64))
+   );
+
+   public static void register(IEventBus eventBus) {
+      ITEMS.register(eventBus);
+   }
+
+   public static Collection<RegistryObject<Item>> getIronsItems() {
+      return ITEMS.getEntries();
+   }
+}
