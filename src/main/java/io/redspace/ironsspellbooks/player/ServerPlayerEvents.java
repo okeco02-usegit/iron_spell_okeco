@@ -1,6 +1,7 @@
 package io.redspace.ironsspellbooks.player;
 
 import io.redspace.ironsspellbooks.IronsSpellbooks;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.api.events.SpellTeleportEvent;
 import io.redspace.ironsspellbooks.api.item.CastingImplementData;
@@ -409,7 +410,7 @@ public class ServerPlayerEvents {
    @SubscribeEvent
    public static void fixDragonCrits(CriticalHitEvent event) {
       if (!event.getTarget().f_19853_.f_46443_) {
-         if (event.getTarget() instanceof var dragonPartEntity) {
+         if (event.getTarget() instanceof EnderDragonPart dragonPartEntity) {
             Entity part = (Entity)dragonPartEntity;
             Player attacker = event.getEntity();
             boolean defaultShouldCrit = attacker.m_36403_(0.5F) > 0.9

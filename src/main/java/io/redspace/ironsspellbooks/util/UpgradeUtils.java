@@ -1,6 +1,7 @@
 package io.redspace.ironsspellbooks.util;
 
 import com.google.common.collect.Multimap;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.item.UpgradeData;
 import io.redspace.ironsspellbooks.item.armor.UpgradeOrbType;
@@ -38,7 +39,7 @@ public class UpgradeUtils {
    );
 
    public static String getRelevantEquipmentSlot(ItemStack itemStack) {
-      if (itemStack.m_41720_() instanceof var curioItem) {
+      if (itemStack.m_41720_() instanceof ICurioItem curioItem) {
          Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags((Item)curioItem);
          Optional<String> slot = tags.stream().findFirst();
          if (slot.isPresent()) {

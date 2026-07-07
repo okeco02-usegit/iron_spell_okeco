@@ -46,6 +46,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio.SoundInfo;
+import net.minecraft.world.damagesource.DamageSource;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class SpellBook extends CurioBaseItem implements ISpellbook, IPresetSpellContainer, ILecternPlaceable {
    protected final int maxSpellSlots;
@@ -151,6 +153,12 @@ public class SpellBook extends CurioBaseItem implements ISpellbook, IPresetSpell
    @Override
    public SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
       return new SoundInfo((SoundEvent)SoundRegistry.EQUIP_SPELL_BOOK.get(), 1.0F, 1.0F);
+   }
+
+   @NotNull
+   @Override
+   public ICurio.DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {
+      return ICurio.DropRule.ALWAYS_KEEP;
    }
 
    @Override
